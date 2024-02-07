@@ -1,0 +1,57 @@
+-- Table: students
+DROP TABLE IF EXISTS students;
+-- CREATE TABLE IF NOT EXISTS students (
+CREATE TABLE students (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_name VARCHAR(255) UNIQUE NOT NULL,
+    group_id INTEGER,
+    FOREIGN KEY (group_id) REFERENCES gqroups (id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+);
+
+-- Table: Groups
+DROP TABLE IF EXISTS groups;
+-- CREATE TABLE IF NOT EXISTS students (
+CREATE TABLE groups (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  group_name VARCHAR(30) UNIQUE NOT NULL
+);
+
+-- Table: Professors
+DROP TABLE IF EXISTS professors;
+-- CREATE TABLE IF NOT EXISTS professors (
+CREATE TABLE professors(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  professor_name VARCHAR(70) UNIQUE NOT NULL,
+  subject_name VARCHAR(50) NOT NULL
+);
+
+-- Table: Subjects
+DROP TABLE IF EXISTS subjects;
+-- CREATE TABLE IF NOT EXISTS Subjects(
+CREATE TABLE subjects(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  subject_name VARCHAR(50) UNIQUE NOT NULL,
+  professors_id INTEGER,
+  FOREIGN KEY (professors_id) REFERENCES professors (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+-- Table: Raiting
+DROP TABLE IF EXISTS raiting;
+-- CREATE TABLE IF NOT EXISTS raiting(
+CREATE TABLE raiting(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  student_id INTEGER NOT NULL,
+  subject_id INTEGER NOT NULL,
+  rate VARCHAR(10) NOT NULL,
+  date_of DATE NOT NULL,
+  FOREIGN KEY (student_id) REFERENCES students (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  FOREIGN KEY (subject_id) REFERENCES subjects (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
