@@ -49,7 +49,7 @@ def prepare_data(students, groups, subjects, professors) -> tuple():
         for_subjects.append((subject, randint(1, NUMBER_PROFESSORS)))
 
     for_professors = []
-    for professor, subject in professors:
+    for professor in professors:
         for_professors.append((professor, choice(subjects)))
 
     for_raiting = []
@@ -86,7 +86,7 @@ def insert_data_to_db(students, groups, subjects, professors, raiting) -> None:
         cur.executemany(sql_to_subjects, subjects)
 
         sql_to_raiting = """INSERT INTO raiting(student_id, subject_id, rate, date_of)
-                              VALUES (?, ?, ?)"""
+                              VALUES (?, ?, ?, ?)"""
         cur.executemany(sql_to_raiting, raiting)
 
         con.commit()

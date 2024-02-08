@@ -5,7 +5,7 @@ CREATE TABLE students (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     student_name VARCHAR(255) UNIQUE NOT NULL,
     group_id INTEGER,
-    FOREIGN KEY (group_id) REFERENCES gqroups (id)
+    FOREIGN KEY (group_id) REFERENCES groups (id)
       ON DELETE CASCADE
       ON UPDATE CASCADE
 );
