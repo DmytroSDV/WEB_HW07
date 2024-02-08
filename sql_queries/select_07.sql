@@ -1,6 +1,6 @@
 -- Знайти оцінки студентів у окремій групі з певного предмета.
 
-SELECT r.student_id, r.rate
+SELECT r.student_id, s.student_name, sb.subject_name, r.rate
 FROM raiting r
 JOIN students s ON r.student_id = s.id
 JOIN subjects sb ON r.subject_id = sb.id
