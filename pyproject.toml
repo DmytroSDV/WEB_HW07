@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "web-hw06"
+name = "web-hw07"
 version = "0.1.0"
 description = ""
 authors = ["DmytroSDV <sdmytrov11@gmail.com>"]
@@ -8,6 +8,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 faker = "^23.0.0"
+alembic = "^1.13.1"
+sqlalchemy = "^2.0.26"
+argparse = "^1.4.0"
 
 
 [build-system]

@@ -3,7 +3,7 @@ from faker.providers import BaseProvider
 import random
 
 
-class MedicalProfessionsProvider(BaseProvider):
+class UniversityFaker(BaseProvider):
     def __init__(self, generator):
         super().__init__(generator)
         self.all_subjects = ["Мистецтво", "Комп'ютерні науки",
@@ -52,7 +52,7 @@ class MedicalProfessionsProvider(BaseProvider):
 class CustomFaker(Faker):
     def __init__(self, locale='en-US'):
         super().__init__(locale)
-        self.add_provider(MedicalProfessionsProvider)
+        self.add_provider(UniversityFaker)
 
 
 if __name__ == "__main__":
