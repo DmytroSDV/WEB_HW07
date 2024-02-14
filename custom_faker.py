@@ -2,6 +2,8 @@ from faker import Faker
 from faker.providers import BaseProvider
 import random
 
+from custom_logger import my_logger
+
 
 class UniversityFaker(BaseProvider):
     def __init__(self, generator):
@@ -56,4 +58,4 @@ class CustomFaker(Faker):
 
 
 if __name__ == "__main__":
-    print("Hello, this is custom faker!")
+    my_logger.log("Hello, this is custom faker!")

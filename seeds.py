@@ -1,6 +1,6 @@
 from connect_db import session
 from tab_models import Students, Groups, Professors, Subjects, Raiting
-from faker_data import CustomFaker
+from custom_faker import CustomFaker
 
 from random import randint, choice
 from datetime import datetime
