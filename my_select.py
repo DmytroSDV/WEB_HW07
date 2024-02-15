@@ -4,6 +4,9 @@ from tab_models import Students, Groups, Professors, Subjects, Raiting
 from connect_db import session
 from custom_vizualization import vizualization
 from custom_logger import my_logger
+from custom_faker import CustomFaker
+
+fake = CustomFaker("uk_UA")
 
 
 @vizualization
@@ -218,8 +221,13 @@ def select_12():
 
     return query
 
+def get_info():
+    query = session.execute(select(Students)).scalars()
+    print(query)
+    return query
 
 if __name__ == '__main__':
+    get_info()
     select_01()
     select_02()
     select_03()

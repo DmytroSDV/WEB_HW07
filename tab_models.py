@@ -29,6 +29,8 @@ class Professors(Base):
     fullname: Mapped[str] = mapped_column(
         String(100), nullable=False, unique=True)
     subject: Mapped[str] = mapped_column(String(50), nullable=False)
+    subjects: Mapped['Subjects'] = relationship(
+        "Subjects", cascade="all, delete-orphan")
 
 
 class Subjects(Base):
@@ -38,7 +40,10 @@ class Subjects(Base):
         String(50), unique=True, nullable=False)
     professors_id: Mapped[int] = mapped_column(ForeignKey(
         "professors.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
-    professor: Mapped['Professors'] = relationship("Professors")
+    professor: Mapped['Professors'] = relationship(
+        "Professors", back_populates='subjects')
+    raitings: Mapped['Raiting'] = relationship(
+        "Raiting", cascade="all, delete-orphan")
 
 
 class Raiting(Base):
@@ -49,7 +54,8 @@ class Raiting(Base):
     student: Mapped['Students'] = relationship("Students")
     subject_id: Mapped[int] = mapped_column(ForeignKey(
         'subjects.id', ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
-    subject: Mapped['Subjects'] = relationship("Subjects")
+    subject: Mapped['Subjects'] = relationship(
+        "Subjects", cascade="all, delete", overlaps="raitings") 
     rate: Mapped[int] = mapped_column(nullable=False)
     date_of: Mapped[DateTime] = mapped_column(
         DateTime, default=datetime.now(), nullable=False)

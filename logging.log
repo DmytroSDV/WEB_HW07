@@ -26,3 +26,15 @@ ERROR, 2024-02-14 16:49:17, module - 'custom_logger', function - 'log', line - '
 ERROR, 2024-02-14 16:49:41, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: list index out of range'
 ERROR, 2024-02-14 16:50:28, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: list index out of range'
 ERROR, 2024-02-14 16:52:13, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: list index out of range'
+ERROR, 2024-02-15 09:00:16, module - 'custom_logger', function - 'log', line - '66'. Message - 'Unable to insert data to the database!'
+ERROR, 2024-02-15 09:00:54, module - 'custom_logger', function - 'log', line - '66'. Message - 'Unable to insert data to the database!
+(sqlite3.IntegrityError) UNIQUE constraint failed: groups.group_name
+[SQL: INSERT INTO groups (group_name) VALUES (?) RETURNING id]
+[parameters: ('Лабораторія Мрійників',)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)'
+ERROR, 2024-02-15 09:01:09, module - 'custom_logger', function - 'log', line - '66'. Message - 'Unable to insert data to the database!
+(sqlite3.IntegrityError) UNIQUE constraint failed: professors.fullname
+[SQL: INSERT INTO professors (fullname, subject) VALUES (?, ?) RETURNING id]
+[parameters: ('Професор Андрій Гринь', 'Англійска мова')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)'
+ERROR, 2024-02-15 16:20:04, module - 'custom_logger', function - 'log', line - '66'. Message - 'remove_func'

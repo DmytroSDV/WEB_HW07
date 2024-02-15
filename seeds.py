@@ -1,6 +1,7 @@
 from connect_db import session
 from tab_models import Students, Groups, Professors, Subjects, Raiting
 from custom_faker import CustomFaker
+from custom_logger import my_logger
 
 from random import randint, choice
 from datetime import datetime
@@ -55,7 +56,12 @@ def generate_fake_data(number_students, number_groups, number_subjects, number_p
 if __name__ == '__main__':
     fake_data = generate_fake_data(
         NUMBER_OF_STUDENTS, NUMBER_OF_GROUPS, NUMBER_OF_SUBJECTS, NUMBER_PROFESSORS, NUMBER_RAITING)
-
-    for elements in fake_data:
-        session.add_all(elements)
-    session.commit()
+    try:
+        for elements in fake_data:
+            session.add_all(elements)
+        session.commit()
+    except Exception as ex:
+        my_logger.log(f'Unable to insert data to the database!\n{ex}', 40)
+        session.rollback()
+    finally:
+        session.close()
