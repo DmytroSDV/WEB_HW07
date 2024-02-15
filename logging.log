@@ -1,40 +1,17 @@
-ERROR, 2024-02-14 13:22:27, module - 'custom_logger', function - 'log', line - '66'. Message - 'Error executing SQL query: 'list' object has no attribute 'keys''
-ERROR, 2024-02-14 14:07:10, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: '
-ERROR, 2024-02-14 15:21:05, module - 'custom_logger', function - 'log', line - '66'. Message - 'This is an error message'
-CRITICAL, 2024-02-14 15:21:05, module - 'custom_logger', function - 'log', line - '66'. Message - 'This is a critical message'
-ERROR, 2024-02-14 15:21:38, module - 'custom_logger', function - 'log', line - '66'. Message - 'This is an error message'
-CRITICAL, 2024-02-14 15:21:38, module - 'custom_logger', function - 'log', line - '66'. Message - 'This is a critical message'
-ERROR, 2024-02-14 15:25:10, module - 'custom_logger', function - 'log', line - '66'. Message - 'This is an error message'
-CRITICAL, 2024-02-14 15:25:10, module - 'custom_logger', function - 'log', line - '66'. Message - 'This is a critical message'
-ERROR, 2024-02-14 15:26:52, module - 'custom_logger', function - 'log', line - '66'. Message - 'This is an error message'
-CRITICAL, 2024-02-14 15:26:52, module - 'custom_logger', function - 'log', line - '66'. Message - 'This is a critical message'
-ERROR, 2024-02-14 15:33:50, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'id''
-ERROR, 2024-02-14 15:33:50, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'id''
-ERROR, 2024-02-14 15:34:05, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'id''
-ERROR, 2024-02-14 15:34:05, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'id''
-ERROR, 2024-02-14 15:34:34, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'id''
-ERROR, 2024-02-14 15:34:34, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'id''
-ERROR, 2024-02-14 15:34:47, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'rate''
-ERROR, 2024-02-14 15:34:47, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'student_id''
-ERROR, 2024-02-14 15:35:10, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'rate''
-ERROR, 2024-02-14 15:35:10, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'student_id''
-ERROR, 2024-02-14 15:35:42, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'rate''
-ERROR, 2024-02-14 15:35:42, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'student_id''
-ERROR, 2024-02-14 15:35:53, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'rate''
-ERROR, 2024-02-14 15:35:53, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: 'student_id''
-ERROR, 2024-02-14 16:49:17, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: list index out of range'
-ERROR, 2024-02-14 16:49:41, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: list index out of range'
-ERROR, 2024-02-14 16:50:28, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: list index out of range'
-ERROR, 2024-02-14 16:52:13, module - 'custom_logger', function - 'log', line - '66'. Message - 'while executing query: list index out of range'
-ERROR, 2024-02-15 09:00:16, module - 'custom_logger', function - 'log', line - '66'. Message - 'Unable to insert data to the database!'
-ERROR, 2024-02-15 09:00:54, module - 'custom_logger', function - 'log', line - '66'. Message - 'Unable to insert data to the database!
-(sqlite3.IntegrityError) UNIQUE constraint failed: groups.group_name
-[SQL: INSERT INTO groups (group_name) VALUES (?) RETURNING id]
-[parameters: ('Лабораторія Мрійників',)]
-(Background on this error at: https://sqlalche.me/e/20/gkpj)'
-ERROR, 2024-02-15 09:01:09, module - 'custom_logger', function - 'log', line - '66'. Message - 'Unable to insert data to the database!
-(sqlite3.IntegrityError) UNIQUE constraint failed: professors.fullname
-[SQL: INSERT INTO professors (fullname, subject) VALUES (?, ?) RETURNING id]
-[parameters: ('Професор Андрій Гринь', 'Англійска мова')]
-(Background on this error at: https://sqlalche.me/e/20/gkpj)'
-ERROR, 2024-02-15 16:20:04, module - 'custom_logger', function - 'log', line - '66'. Message - 'remove_func'
+ERROR, 2024-02-15 19:16:42, module - 'custom_logger', function - 'log', line - '66'. Message - 'test message'
+ERROR, 2024-02-15 20:01:36, module - 'custom_logger', function - 'log', line - '66'. Message - 'Unable to insert data to the database!
+(psycopg2.errors.UndefinedTable) relation "groups" does not exist
+LINE 1: INSERT INTO groups (group_name) SELECT p0::VARCHAR FROM (VAL...
+                    ^
+
+[SQL: INSERT INTO groups (group_name) SELECT p0::VARCHAR FROM (VALUES (%(group_name__0)s, 0), (%(group_name__1)s, 1), (%(group_name__2)s, 2)) AS imp_sen(p0, sen_counter) ORDER BY sen_counter RETURNING groups.id, groups.id AS id__1]
+[parameters: {'group_name__0': 'Елітні Мислителі', 'group_name__1': 'Академічний Компас', 'group_name__2': 'Відкриті Горизонти'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)'
+ERROR, 2024-02-15 21:47:45, module - 'custom_logger', function - 'log', line - '66'. Message - 'Unable to update data in the database!
+(psycopg2.errors.InvalidTextRepresentation) invalid input syntax for type integer: "Vasya Pupovinka"
+LINE 1: UPDATE raiting SET rate='Vasya Pupovinka' WHERE raiting.id =...
+                                ^
+
+[SQL: UPDATE raiting SET rate=%(rate)s WHERE raiting.id = %(id_1)s]
+[parameters: {'rate': 'Vasya Pupovinka', 'id_1': 4}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)'

@@ -1,9 +1,12 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from faker import Faker
 from faker.providers import BaseProvider
 import random
 
-from custom_logger import my_logger
-
+from custom_funcs.custom_logger import my_logger
 
 class UniversityFaker(BaseProvider):
     def __init__(self, generator):

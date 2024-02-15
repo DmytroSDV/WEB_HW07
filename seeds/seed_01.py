@@ -1,7 +1,12 @@
-from connect_db import session
-from tab_models import Students, Groups, Professors, Subjects, Raiting
-from custom_faker import CustomFaker
-from custom_logger import my_logger
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+from conf_db.connect_db import session
+from conf_db.tab_models import Students, Groups, Professors, Subjects, Raiting
+from custom_funcs.custom_faker import CustomFaker
+from custom_funcs.custom_logger import my_logger
 
 from random import randint, choice
 from datetime import datetime

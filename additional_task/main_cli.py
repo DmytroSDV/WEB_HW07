@@ -6,8 +6,6 @@ from cli_comands import CliCommands
 
 import argparse
 
-
-
 parser = argparse.ArgumentParser(description="CRUD_db_helper")
 parser.add_argument("--action", "-a", choices=["create", "list", "update", "remove"],
                     help="type/choose the operation (create/list/update/remove)", required=True)

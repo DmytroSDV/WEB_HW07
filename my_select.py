@@ -1,10 +1,14 @@
-from sqlalchemy import select, and_, or_, not_, desc, func
-from tab_models import Students, Groups, Professors, Subjects, Raiting
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from connect_db import session
-from custom_vizualization import vizualization
-from custom_logger import my_logger
-from custom_faker import CustomFaker
+from sqlalchemy import select, and_, desc, func, update
+from conf_db.tab_models import Students, Groups, Professors, Subjects, Raiting
+
+from conf_db.connect_db import session
+from custom_funcs.custom_vizualization import vizualization
+from custom_funcs.custom_logger import my_logger
+from custom_funcs.custom_faker import CustomFaker
 
 fake = CustomFaker("uk_UA")
 
@@ -20,7 +24,7 @@ def select_01():
         select(Raiting.student_id, Students.fullname,
                func.round(func.avg(Raiting.rate), 2).label('avg_rate'))
         .join(Students)
-        .group_by(Raiting.student_id)
+        .group_by(Raiting.student_id, Students.fullname)
         .order_by(desc("avg_rate"))
         .limit(5)
     ).mappings().all()
@@ -40,7 +44,7 @@ def select_02():
         .join(Students)
         .join(Subjects)
         .where(Raiting.subject_id == 2)
-        .group_by(Raiting.student_id)
+        .group_by(Raiting.student_id, Raiting.subject_id, Students.fullname, Subjects.subject)
         .order_by(desc("avg_rate"))
         .limit(1)
     ).mappings().all()
@@ -55,14 +59,14 @@ def select_03():
     my_logger.log(info)
 
     query = session.execute(
-        select(Groups.id, Groups.group_name,
+        select(Groups.id, Groups.group_name, Subjects.subject,
                func.round(func.avg(Raiting.rate), 2).label("avg_rate"))
         .select_from(Raiting)
         .join(Students)
         .join(Groups)
         .join(Subjects)
         .where(Subjects.id == 2)
-        .group_by(Groups.id)
+        .group_by(Groups.id, Subjects.subject)
     ).mappings().all()
     return query
 
@@ -140,6 +144,7 @@ def select_08():
                             .select_from(Raiting)
                             .join(Subjects)
                             .join(Professors)
+                            .group_by(Professors.fullname, Subjects.subject)
                             .where(Professors.id == 2)
                             ).mappings().all()
 
@@ -196,6 +201,7 @@ def select_11():
                             .join(Students)
                             .join(Subjects)
                             .join(Professors)
+                            .group_by(Students.fullname, Professors.fullname,Subjects.subject)
                             .where(and_(Professors.id == 2, Students.id == 2))
                             ).mappings().all()
 
@@ -221,22 +227,43 @@ def select_12():
 
     return query
 
+@vizualization
 def get_info():
-    query = session.execute(select(Students)).scalars()
-    print(query)
+    query = session.execute(select(Students.id,Students.fullname, Students.group_id)
+                            .select_from(Students)).mappings().all()
     return query
 
+def update_student(s_id, teachers):
+    stmt = (
+    update(Students)
+    .where(Students.id == s_id)
+    .values(fullname=teachers)
+        )
+    session.execute(stmt)
+    session.commit()
+    session.close()
+    # return std
+
+
+def remove_student(s_id):
+    student = session.execute(select(Students).where(Students.id == s_id)).scalar_one()
+    print(student.fullname)
+    session.delete(student)
+    session.commit()
+
 if __name__ == '__main__':
-    get_info()
-    select_01()
-    select_02()
-    select_03()
-    select_04()
-    select_05()
-    select_06()
-    select_07()
-    select_08()
-    select_09()
-    select_10()
-    select_11()
-    select_12()
+    # get_info()
+    # update_student(8, fake.name())
+    remove_student(8)
+    # select_01()
+    # select_02()
+    # select_03()
+    # select_04()
+    # select_05()
+    # select_06()
+    # select_07()
+    # select_08()
+    # select_09()
+    # select_10()
+    # select_11()
+    # select_12()
