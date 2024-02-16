@@ -16,6 +16,7 @@ NUMBER_OF_GROUPS = 3
 NUMBER_OF_SUBJECTS = 8
 NUMBER_PROFESSORS = 5
 NUMBER_RAITING = 20
+c_facker = CustomFaker('uk_UA')
 
 
 def generate_fake_data(number_students, number_groups, number_subjects, number_professors, number_of_raiting) -> list[object]:
@@ -25,8 +26,6 @@ def generate_fake_data(number_students, number_groups, number_subjects, number_p
     fake_subjects = []
     fake_professors = []
     fake_raiting = []
-
-    c_facker = CustomFaker('uk_UA')
 
     # Students
     for _ in range(number_students):

@@ -4,15 +4,15 @@ from abc import ABC, abstractmethod
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from sqlalchemy import select, and_, or_, not_, desc, func, update
+from random import randint, choice
+from datetime import datetime
 
 from custom_funcs.custom_vizualization import vizualization
 from custom_funcs.custom_logger import my_logger
 from custom_funcs.custom_faker import CustomFaker
 from conf_db.tab_models import Students, Groups, Professors, Subjects, Raiting
 from conf_db.connect_db import session
-
-
-MODELS = {"Students": Students, "Groups": Groups, "Professors": Professors, "Subjects": Subjects, "Raiting": Raiting}
+from seeds.seed_01 import NUMBER_OF_GROUPS, NUMBER_OF_STUDENTS, NUMBER_OF_SUBJECTS, NUMBER_PROFESSORS, NUMBER_RAITING, c_facker
 
 
 class CliSceleton(ABC):
@@ -32,11 +32,35 @@ class CreateNewEntry(CliSceleton):
         self.command_run()
 
     def command_run(self):
-
-        my_logger.log("create_func", 10)
-        my_logger.log(self.model)
-        my_logger.log(self.id_s)
-        my_logger.log(self.name)
+        
+        info = f"-- Updating user {self.name} with id {self.id_s} in the {self.model} table!"
+        my_logger.log(info)
+        if not self.name:
+            return my_logger.log(f"""
+            Wrong input data for the update function additionally
+            you must enterand -n(name(str))!""")
+        
+        try:
+            model_queries = {
+            "Students": {
+                "query": Students(fullname=self.name, group_id=randint(1, NUMBER_OF_GROUPS))},
+            "Groups": {
+                "query": Groups(group_name=self.name)},
+            "Professors": {
+                "query": Subjects(subject=self.name, professors_id=randint(1, NUMBER_PROFESSORS))},
+            "Subjects": {
+                "query": Professors(fullname=self.name, subject=c_facker.subjects())},
+            "Raiting": {
+                "query": Raiting(student_id=randint(1, NUMBER_OF_STUDENTS), subject_id=randint(
+                1, NUMBER_OF_SUBJECTS), rate=randint(21, 100), date_of=datetime(2023, randint(1, 12), randint(10, 20)).date())}}
+            new_data = model_queries[self.model]['query']
+            session.add(new_data)
+            session.commit()
+        except Exception as ex:
+            my_logger.log(f'Unable to create data in the database!\n{ex}', 40)
+            session.rollback()
+        finally:
+            session.close()
 
 class ShowAllEntries(CliSceleton):
     def __init__(self, model: str, id_s: int = None, name: str = None):
@@ -126,10 +150,38 @@ class DeleteExistEntry(CliSceleton):
         self.command_run()
 
     def command_run(self):
-        my_logger.log("remove_func", 10)
-        my_logger.log(self.model)
-        my_logger.log(self.id_s)
-        my_logger.log(self.name)
+
+        info = f"-- Delete user {self.name} with id {self.id_s} in the {self.model} table!"
+        my_logger.log(info)
+
+        if not self.id_s or not isinstance(self.id_s, int):
+            return my_logger.log(f"""
+            Wrong input data for the delete function additionally
+            you must enter -i (id of the row)!""")
+        
+        try:
+            model_queries = {
+            "Students": {
+                "query": session.execute(select(Students).where(Students.id == self.id_s)).scalar_one()},
+            "Groups": {
+                "query": session.execute(select(Groups).where(Groups.id == self.id_s)).scalar_one()},
+            "Professors": {
+                "query": session.execute(select(Professors).where(Professors.id == self.id_s)).scalar_one()},
+            "Subjects": {
+                "query": session.execute(select(Subjects).where(Subjects.id == self.id_s)).scalar_one()},
+            "Raiting": {
+                "query": session.execute(select(Raiting).where(Raiting.id == self.id_s)).scalar_one()}}
+            
+            return_data = model_queries[self.model]["query"]
+            session.delete(return_data)
+            session.commit()
+            my_logger.log(f"User with id {self.id_s} successfully deleted from the {self.model} table!!")
+            
+        except Exception as ex:
+            my_logger.log(f'Unable to delate data from the database!\n{ex}', 40)
+            session.rollback()
+        finally:
+            session.close()
 
 class CliCommands:
     def __init__(self):

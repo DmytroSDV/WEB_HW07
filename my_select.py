@@ -227,43 +227,16 @@ def select_12():
 
     return query
 
-@vizualization
-def get_info():
-    query = session.execute(select(Students.id,Students.fullname, Students.group_id)
-                            .select_from(Students)).mappings().all()
-    return query
-
-def update_student(s_id, teachers):
-    stmt = (
-    update(Students)
-    .where(Students.id == s_id)
-    .values(fullname=teachers)
-        )
-    session.execute(stmt)
-    session.commit()
-    session.close()
-    # return std
-
-
-def remove_student(s_id):
-    student = session.execute(select(Students).where(Students.id == s_id)).scalar_one()
-    print(student.fullname)
-    session.delete(student)
-    session.commit()
-
 if __name__ == '__main__':
-    # get_info()
-    # update_student(8, fake.name())
-    remove_student(8)
-    # select_01()
-    # select_02()
-    # select_03()
-    # select_04()
-    # select_05()
-    # select_06()
-    # select_07()
-    # select_08()
-    # select_09()
-    # select_10()
-    # select_11()
-    # select_12()
+    select_01()
+    select_02()
+    select_03()
+    select_04()
+    select_05()
+    select_06()
+    select_07()
+    select_08()
+    select_09()
+    select_10()
+    select_11()
+    select_12()
